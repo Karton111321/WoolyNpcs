@@ -18,6 +18,10 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class GuiManager {
+    private static ru.qweyns.woolynpcs.config.ConfigManager cfg() {
+        return WoolyNpcs.getInstance().getConfigManager();
+    }
+
     public static void openEditor(Player player, WoolyNpc npc) {
         FileConfiguration guiConfig = WoolyNpcs.getInstance().getConfigManager().getGuiConfig();
         ConfigurationSection editorSec = guiConfig.getConfigurationSection("editor");
@@ -78,7 +82,7 @@ public class GuiManager {
         }
 
         new PickerGui(plugin.getConfigManager().getMessage("gui-model-title"),
-                models, Material.ARMOR_STAND,
+                models, cfg().guiMaterial("picker.model-material", Material.ARMOR_STAND),
                 picked -> {
                     npc.setModelId(picked);
                     plugin.getStorageManager().markDirty();
@@ -99,7 +103,7 @@ public class GuiManager {
         }
 
         new PickerGui(plugin.getConfigManager().getMessage("gui-animation-title"),
-                animations, Material.FEATHER,
+                animations, cfg().guiMaterial("picker.animation-material", Material.FEATHER),
                 picked -> {
                     npc.setDefaultAnimation(picked);
                     plugin.getStorageManager().markDirty();
@@ -127,7 +131,7 @@ public class GuiManager {
         }
 
         new PickerGui(plugin.getConfigManager().getMessage("gui-actions-title"),
-                labels, Material.COMMAND_BLOCK,
+                labels, cfg().guiMaterial("picker.action-material", Material.COMMAND_BLOCK),
                 picked -> {
                     int index = parseIndex(picked);
                     if (index < 0 || index >= npc.getActions().size()) return;
@@ -190,7 +194,7 @@ public class GuiManager {
         if (mat == null) {
             WoolyNpcs.getInstance().getLogger().warning(
                     "gui.yml: неизвестный материал '" + matName + "', используется STONE.");
-            mat = Material.STONE;
+            mat = cfg().guiMaterial("fallback-material", Material.STONE);
         }
 
         ItemStack item = new ItemStack(mat);

@@ -16,12 +16,22 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class PickerGui implements InventoryHolder {
-    private static final int ROWS = 5;
-    private static final int PAGE_SIZE = ROWS * 9;
+    private static int rows() {
+        return Math.max(1, Math.min(5, cfg().guiInt("picker.rows", 5)));
+    }
 
-    private static final int SLOT_PREV  = PAGE_SIZE + 3;
-    private static final int SLOT_CLOSE = PAGE_SIZE + 4;
-    private static final int SLOT_NEXT  = PAGE_SIZE + 5;
+    private static int pageSize() {
+        return rows() * 9;
+    }
+
+    private static int controlSlot(String key, int def) {
+        int slot = Math.max(0, Math.min(8, cfg().guiInt("picker.items." + key + ".slot", def)));
+        return pageSize() + slot;
+    }
+
+    private static ru.qweyns.woolynpcs.config.ConfigManager cfg() {
+        return WoolyNpcs.getInstance().getConfigManager();
+    }
 
     private final String         title;
     private final List<String>   options;
@@ -36,48 +46,64 @@ public class PickerGui implements InventoryHolder {
                      Consumer<String> onPick, Runnable onBack) {
         this.title   = title;
         this.options = options;
-        this.icon    = icon == null ? Material.PAPER : icon;
+        this.icon    = icon;
         this.onPick  = onPick;
         this.onBack  = onBack;
     }
 
     public void open(Player player, int page) {
+        int pageSize = pageSize();
         this.page = Math.max(0, Math.min(page, lastPage()));
 
-        Inventory inv = Bukkit.createInventory(this, PAGE_SIZE + 9,
-                ColorUtil.format(title + " &#9CA3AF(" + (this.page + 1) + "/" + (lastPage() + 1) + ")"));
+        String rawTitle = cfg().guiString("picker.title", "{title} &#9CA3AF({page}/{pages})")
+                .replace("{title}", title)
+                .replace("{page}", String.valueOf(this.page + 1))
+                .replace("{pages}", String.valueOf(lastPage() + 1));
+
+        Inventory inv = Bukkit.createInventory(this, pageSize + 9, ColorUtil.format(rawTitle));
         this.inventory = inv;
 
-        int from = this.page * PAGE_SIZE;
-        int to = Math.min(options.size(), from + PAGE_SIZE);
+        Material itemIcon = icon != null ? icon
+                : cfg().guiMaterial("picker.item-material", Material.PAPER);
+        String nameFormat = cfg().guiString("picker.item-name", "&#F5F5F0{value}");
+
+        int from = this.page * pageSize;
+        int to = Math.min(options.size(), from + pageSize);
         for (int i = from; i < to; i++) {
-            inv.setItem(i - from, button(icon, "&#F5F5F0" + options.get(i), null));
+            inv.setItem(i - from, button(itemIcon, nameFormat.replace("{value}", options.get(i)), null));
         }
 
         if (this.page > 0) {
-            inv.setItem(SLOT_PREV, button(Material.ARROW, message("gui-prev"), null));
+            inv.setItem(controlSlot("prev", 3),
+                    button(cfg().guiMaterial("picker.items.prev.material", Material.ARROW),
+                            cfg().guiString("picker.items.prev.name", "&#BBDEFB◀"), null));
         }
         if (this.page < lastPage()) {
-            inv.setItem(SLOT_NEXT, button(Material.ARROW, message("gui-next"), null));
+            inv.setItem(controlSlot("next", 5),
+                    button(cfg().guiMaterial("picker.items.next.material", Material.ARROW),
+                            cfg().guiString("picker.items.next.name", "&#BBDEFB▶"), null));
         }
-        inv.setItem(SLOT_CLOSE, button(Material.BARRIER,
-                message(onBack == null ? "gui-close" : "gui-back"), null));
+        inv.setItem(controlSlot("close", 4),
+                button(cfg().guiMaterial("picker.items.close.material", Material.BARRIER),
+                        cfg().guiString("picker.items.close.name", "&#FF8B94Закрыть"), null));
 
         player.openInventory(inv);
     }
 
     public boolean click(Player player, int slot) {
-        if (slot == SLOT_PREV)  { open(player, page - 1); return true; }
-        if (slot == SLOT_NEXT)  { open(player, page + 1); return true; }
-        if (slot == SLOT_CLOSE) {
+        int pageSize = pageSize();
+
+        if (slot == controlSlot("prev", 3))  { open(player, page - 1); return true; }
+        if (slot == controlSlot("next", 5))  { open(player, page + 1); return true; }
+        if (slot == controlSlot("close", 4)) {
             if (onBack != null) onBack.run();
             else player.closeInventory();
             return true;
         }
 
-        if (slot < 0 || slot >= PAGE_SIZE) return false;
+        if (slot < 0 || slot >= pageSize) return false;
 
-        int index = page * PAGE_SIZE + slot;
+        int index = page * pageSize + slot;
         if (index >= options.size()) return false;
 
         onPick.accept(options.get(index));
@@ -86,7 +112,7 @@ public class PickerGui implements InventoryHolder {
 
     private int lastPage() {
         if (options.isEmpty()) return 0;
-        return (options.size() - 1) / PAGE_SIZE;
+        return (options.size() - 1) / pageSize();
     }
 
     private String message(String key) {

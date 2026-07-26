@@ -172,7 +172,101 @@ public class ConfigManager {
         return getMessage(spawned ? "spawned-yes" : "spawned-no", "status", spawned ? "✔" : "✘");
     }
 
+    public String guiString(String path, String def) {
+        String value = guiConfig.getString(path);
+        if (value == null && guiConfig.getDefaults() != null) {
+            value = guiConfig.getDefaults().getString(path);
+        }
+        return value == null ? def : value;
+    }
+
+    public int guiInt(String path, int def) {
+        if (guiConfig.contains(path)) return guiConfig.getInt(path);
+        if (guiConfig.getDefaults() != null && guiConfig.getDefaults().contains(path)) {
+            return guiConfig.getDefaults().getInt(path);
+        }
+        return def;
+    }
+
+    public java.util.List<String> guiLore(String path) {
+        java.util.List<String> lore = guiConfig.getStringList(path);
+        if (lore.isEmpty() && guiConfig.getDefaults() != null) {
+            lore = guiConfig.getDefaults().getStringList(path);
+        }
+        return lore;
+    }
+
+    public org.bukkit.Material guiMaterial(String path, org.bukkit.Material def) {
+        org.bukkit.Material material = org.bukkit.Material.matchMaterial(
+                guiString(path, def.name()).toUpperCase(Locale.ROOT));
+        return material == null ? def : material;
+    }
+
     public FileConfiguration getGuiConfig() {
         return guiConfig;
+    }
+
+    public double getSelectionDistance() {
+        return Math.max(1.0, config.getDouble("settings.selection-distance", 12.0));
+    }
+
+    public double getSelectionConeAngle() {
+        return Math.max(1.0, Math.min(90.0, config.getDouble("settings.selection-cone-angle", 20.0)));
+    }
+
+    public String getWalkAnimation() {
+        return config.getString("settings.walk-animation", "walk");
+    }
+
+    public int getTerrainStepUp() {
+        return Math.max(0, config.getInt("settings.terrain-step-up", 1));
+    }
+
+    public int getTerrainMaxDrop() {
+        return Math.max(0, config.getInt("settings.terrain-max-drop", 4));
+    }
+
+    public int getWebhookTimeout() {
+        return Math.max(1000, config.getInt("settings.webhook-timeout-ms", 5000));
+    }
+
+    public int getWebhookMaxLength() {
+        return Math.max(1, Math.min(2000, config.getInt("settings.webhook-max-length", 1900)));
+    }
+
+    public long getVisualizerInterval() {
+        return Math.max(1L, config.getLong("settings.waypoint-visual-interval-ticks", 10L));
+    }
+
+    public double getVisualizerStep() {
+        return Math.max(0.05, config.getDouble("settings.waypoint-visual-step", 0.5));
+    }
+
+    public long getVisualizerAutoStop() {
+        return Math.max(20L, config.getLong("settings.waypoint-visual-auto-stop-ticks", 2400L));
+    }
+
+    public int getRecycleBinCapacity() {
+        return Math.max(1, config.getInt("settings.undo-capacity", 10));
+    }
+
+    public int getDialogHistoryLimit() {
+        return Math.max(1, config.getInt("settings.dialog-history-limit", 32));
+    }
+
+    public int getTitleFadeIn() {
+        return Math.max(0, config.getInt("settings.title-fade-in-ticks", 10));
+    }
+
+    public int getTitleStay() {
+        return Math.max(0, config.getInt("settings.title-stay-ticks", 70));
+    }
+
+    public int getTitleFadeOut() {
+        return Math.max(0, config.getInt("settings.title-fade-out-ticks", 20));
+    }
+
+    public int getBossbarDefaultSeconds() {
+        return Math.max(1, config.getInt("settings.bossbar-default-seconds", 5));
     }
 }

@@ -18,6 +18,7 @@ import ru.qweyns.woolynpcs.model.ClickType;
 import ru.qweyns.woolynpcs.model.NpcAction;
 import ru.qweyns.woolynpcs.model.WoolyNpc;
 import ru.qweyns.woolynpcs.util.ColorUtil;
+import ru.qweyns.woolynpcs.util.ResourceFolder;
 import ru.qweyns.woolynpcs.util.RegistryUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,7 +46,7 @@ public class DialogManager {
     }
 
     public void reload() {
-        createExampleDialog();
+        ResourceFolder.copyDefaults(plugin, "dialogs");
         loadDialogs();
     }
 
@@ -349,9 +350,10 @@ public class DialogManager {
             String label = available ? choice.getLabel()
                     : (choice.getLockedLabel().isEmpty() ? choice.getLabel() : choice.getLockedLabel());
 
+            var cfg = plugin.getConfigManager();
             Material material = Material.matchMaterial(choice.getMaterial().toUpperCase(Locale.ROOT));
-            if (material == null) material = Material.PAPER;
-            if (!available) material = Material.GRAY_DYE;
+            if (material == null) material = cfg.guiMaterial("dialog.choice-material", Material.PAPER);
+            if (!available) material = cfg.guiMaterial("dialog.locked-material", Material.GRAY_DYE);
 
             ItemStack item = new ItemStack(material);
             ItemMeta meta = item.getItemMeta();
@@ -379,24 +381,26 @@ public class DialogManager {
 
         DialogGuiHolder holder = new DialogGuiHolder(session.getDialogId(), node.getId(), finalMapping);
         String title = dialog.getGuiTitle().isEmpty()
-                ? plugin.getConfigManager().getMessage("dialog-gui-title")
+                ? plugin.getConfigManager().guiString("dialog.title", "&#BBDEFBДиалог")
                 : dialog.getGuiTitle();
 
         Inventory inventory = Bukkit.createInventory(holder, size,
                 ColorUtil.format(applyVariables(player, title)));
         holder.setInventory(inventory);
 
-        ItemStack textItem = new ItemStack(Material.OAK_SIGN);
+        ItemStack textItem = new ItemStack(
+                plugin.getConfigManager().guiMaterial("dialog.text-material", Material.OAK_SIGN));
         ItemMeta textMeta = textItem.getItemMeta();
         if (textMeta != null) {
-            textMeta.displayName(ColorUtil.format(plugin.getConfigManager()
-                    .getMessage("dialog-gui-text-title")));
+            textMeta.displayName(ColorUtil.format(
+                    plugin.getConfigManager().guiString("dialog.text-name", "&#F5F5F0Реплика")));
             List<net.kyori.adventure.text.Component> lore = new ArrayList<>();
-            for (String line : wrap(npcText, 40)) lore.add(ColorUtil.format(line));
+            int width = Math.max(10, plugin.getConfigManager().guiInt("dialog.text-wrap", 40));
+            for (String line : wrap(npcText, width)) lore.add(ColorUtil.format(line));
             textMeta.lore(lore);
             textItem.setItemMeta(textMeta);
         }
-        inventory.setItem(4, textItem);
+        inventory.setItem(textSlot(size), textItem);
 
         for (int i = 0; i < buttons.size(); i++) {
             if (resolved[i] >= 0 && resolved[i] < size) inventory.setItem(resolved[i], buttons.get(i));
@@ -405,10 +409,14 @@ public class DialogManager {
         player.openInventory(inventory);
     }
 
+    private int textSlot(int size) {
+        return Math.max(0, Math.min(size - 1, plugin.getConfigManager().guiInt("dialog.text-slot", 4)));
+    }
+
     private int[] resolveSlots(List<Integer> requested, int size) {
         int[] result = new int[requested.size()];
         Set<Integer> taken = new HashSet<>();
-        taken.add(4);
+        taken.add(textSlot(size));
 
         for (int i = 0; i < requested.size(); i++) {
             int slot = requested.get(i);
@@ -416,7 +424,8 @@ public class DialogManager {
             else result[i] = -1;
         }
 
-        int cursor = 9;
+        int cursor = Math.max(0, Math.min(size - 1,
+                plugin.getConfigManager().guiInt("dialog.first-choice-slot", 9)));
         for (int i = 0; i < result.length; i++) {
             if (result[i] >= 0) continue;
             while (cursor < size && !taken.add(cursor)) cursor++;
@@ -564,56 +573,6 @@ public class DialogManager {
     public Dialog getDialog(String id) { return dialogs.get(id); }
     public Map<String, Dialog> getDialogs() { return dialogs; }
 
-    public void createExampleDialog() {
-        File example = new File(dialogFolder, "example.yml");
-        if (example.exists()) return;
-
-        YamlConfiguration config = new YamlConfiguration();
-        config.set("start", "greeting");
-        config.set("mode", "CHAT");
-
-        config.set("nodes.greeting.text", "&#BBDEFB&lТорговец&#374151: &#F5F5F0Привет, {player}! Чем могу помочь?");
-        config.set("nodes.greeting.choices.1.label", "&#A8E6CFПокажи товары");
-        config.set("nodes.greeting.choices.1.goto", "shop");
-        config.set("nodes.greeting.choices.2.label", "&#BBDEFBО тебе");
-        config.set("nodes.greeting.choices.2.goto", "about");
-        config.set("nodes.greeting.choices.3.label", "&#FF8B94До свидания");
-        config.set("nodes.greeting.choices.3.goto", "close");
-
-        config.set("nodes.shop.text", "&#BBDEFB&lТорговец&#374151: &#F5F5F0У меня есть отличные вещи!");
-        config.set("nodes.shop.sound", "ENTITY_VILLAGER_TRADE");
-        config.set("nodes.shop.choices.1.label", "&#A8E6CFКупить набор — 100 монет");
-        config.set("nodes.shop.choices.1.goto", "bought");
-        config.set("nodes.shop.choices.1.conditions", List.of("PAPI:%vault_eco_balance%>=100"));
-        config.set("nodes.shop.choices.1.actions", List.of("MONEY_TAKE:100", "PLAYER_COMMAND:kit starter"));
-        config.set("nodes.shop.choices.1.hide-if-locked", false);
-        config.set("nodes.shop.choices.1.locked-label", "&#FF8B94Не хватает монет");
-        config.set("nodes.shop.choices.2.label", "&#9CA3AFНазад");
-        config.set("nodes.shop.choices.2.goto", "back");
-
-        config.set("nodes.bought.text", "&#BBDEFB&lТорговец&#374151: &#F5F5F0Отличный выбор!");
-        config.set("nodes.bought.actions", List.of("FLAG_SET:bought_kit"));
-        config.set("nodes.bought.auto-goto", "greeting");
-        config.set("nodes.bought.auto-delay", 60);
-
-        config.set("nodes.about.text", "&#BBDEFB&lТорговец&#374151: &#F5F5F0Я странствующий торговец. Путешествую по мирам.");
-        config.set("nodes.about.choices.1.label", "&#A8E6CFИнтересно! Расскажи ещё");
-        config.set("nodes.about.choices.1.goto", "about2");
-        config.set("nodes.about.choices.2.label", "&#9CA3AFНазад");
-        config.set("nodes.about.choices.2.goto", "greeting");
-
-        config.set("nodes.about.choices.2.goto", "back");
-
-        config.set("nodes.about2.text", "&#BBDEFB&lТорговец&#374151: &#F5F5F0Когда-нибудь я расскажу тебе свою историю... но не сегодня.");
-        config.set("nodes.about2.typewriter", 1);
-
-        try {
-            config.save(example);
-        } catch (IOException e) {
-            plugin.getLogger().warning("Не удалось создать пример диалога: " + e.getMessage());
-        }
-    }
-
     private static class ActiveDialog {
         private final String dialogId;
         private final UUID   npcId;
@@ -656,7 +615,7 @@ public class DialogManager {
 
         void pushHistory(String nodeId) {
             if (nodeId == null) return;
-            if (history.size() >= 32) history.removeLast();
+            if (history.size() >= WoolyNpcs.getInstance().getConfigManager().getDialogHistoryLimit()) history.removeLast();
             history.push(nodeId);
         }
 

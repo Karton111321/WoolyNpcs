@@ -13,15 +13,20 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SelectionManager {
-    private static final double LOOK_DISTANCE = 12.0;
-
-    private static final double CONE_THRESHOLD = 0.94;
 
     private final WoolyNpcs plugin;
     private final Map<UUID, UUID> selection = new ConcurrentHashMap<>();
 
     public SelectionManager(WoolyNpcs plugin) {
         this.plugin = plugin;
+    }
+
+    private double lookDistance() {
+        return plugin.getConfigManager().getSelectionDistance();
+    }
+
+    private double coneThreshold() {
+        return Math.cos(Math.toRadians(plugin.getConfigManager().getSelectionConeAngle()));
     }
 
     public void select(Player player, WoolyNpc npc) {
@@ -58,7 +63,7 @@ public class SelectionManager {
         try {
             Location eye = player.getEyeLocation();
             RayTraceResult result = player.getWorld().rayTraceEntities(
-                    eye, eye.getDirection(), LOOK_DISTANCE,
+                    eye, eye.getDirection(), lookDistance(),
                     entity -> plugin.getNpcManager().getNpcByBaseEntityId(entity.getUniqueId()) != null);
 
             if (result == null) return null;
@@ -86,13 +91,13 @@ public class SelectionManager {
             Vector toNpc = aim.toVector().subtract(eye.toVector());
 
             double distance = toNpc.length();
-            if (distance > LOOK_DISTANCE || distance <= 0) continue;
+            if (distance > lookDistance() || distance <= 0) continue;
 
             Vector direction = toNpc.normalize();
             double dot = direction.getX() * look.getX()
                     + direction.getY() * look.getY()
                     + direction.getZ() * look.getZ();
-            if (dot < CONE_THRESHOLD) continue;
+            if (dot < coneThreshold()) continue;
 
             if (distance < bestDistance) {
                 bestDistance = distance;

@@ -16,9 +16,9 @@ import ru.qweyns.woolynpcs.model.ClickType;
 import ru.qweyns.woolynpcs.model.NpcAction;
 import ru.qweyns.woolynpcs.model.WoolyNpc;
 import ru.qweyns.woolynpcs.util.ColorUtil;
+import ru.qweyns.woolynpcs.util.ResourceFolder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +39,7 @@ public class MenuManager {
     }
 
     public void reload() {
-        createExampleMenu();
+        ResourceFolder.copyDefaults(plugin, "menus");
         load();
     }
 
@@ -150,7 +150,7 @@ public class MenuManager {
         if (material == null) {
             plugin.getLogger().warning("Меню: неизвестный материал '" + item.getMaterial()
                     + "', используется STONE.");
-            material = Material.STONE;
+            material = plugin.getConfigManager().guiMaterial("fallback-material", Material.STONE);
         }
 
         ItemStack stack = new ItemStack(material);
@@ -183,36 +183,4 @@ public class MenuManager {
         return menus;
     }
 
-    public void createExampleMenu() {
-        File example = new File(folder, "example.yml");
-        if (example.exists()) return;
-
-        YamlConfiguration config = new YamlConfiguration();
-        config.set("title", "&#BBDEFBПример меню");
-        config.set("size", 27);
-
-        config.set("items.11.material", "DIAMOND");
-        config.set("items.11.name", "&#A8E6CFПолучить алмаз");
-        config.set("items.11.lore", List.of("&#9CA3AFОдин раз на игрока", "", "&#BBDEFB▸ Нажмите"));
-        config.set("items.11.actions", List.of(
-                "GIVE_ITEM:[ONCE]DIAMOND 1",
-                "MESSAGE:&#A8E6CFДержите!"));
-
-        config.set("items.13.material", "GOLD_INGOT");
-        config.set("items.13.name", "&#A8E6CFКупить набор за 100");
-        config.set("items.13.lore", List.of("&#9CA3AFНужно 100 монет"));
-        config.set("items.13.actions", List.of(
-                "MONEY_TAKE:100",
-                "PLAYER_COMMAND:kit starter"));
-
-        config.set("items.15.material", "BARRIER");
-        config.set("items.15.name", "&#FF8B94Закрыть");
-        config.set("items.15.actions", List.of("CLOSE_INVENTORY:1"));
-
-        try {
-            config.save(example);
-        } catch (IOException e) {
-            plugin.getLogger().warning("Не удалось создать пример меню: " + e.getMessage());
-        }
-    }
 }

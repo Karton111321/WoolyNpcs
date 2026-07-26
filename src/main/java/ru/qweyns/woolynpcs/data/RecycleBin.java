@@ -8,7 +8,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class RecycleBin {
-    private static final int CAPACITY = 10;
 
     private final WoolyNpcs plugin;
     private final Deque<Entry> entries = new ArrayDeque<>();
@@ -24,7 +23,7 @@ public class RecycleBin {
         entries.push(new Entry(npc.getId().toString(), npc.getName(),
                 snapshot, System.currentTimeMillis()));
 
-        while (entries.size() > CAPACITY) entries.removeLast();
+        while (entries.size() > plugin.getConfigManager().getRecycleBinCapacity()) entries.removeLast();
     }
 
     public String restoreLast() {

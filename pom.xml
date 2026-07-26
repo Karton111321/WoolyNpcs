@@ -6,7 +6,7 @@
 
     <groupId>ru.qweyns</groupId>
     <artifactId>WoolyNpcs</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.release>21</maven.compiler.release>

@@ -7,8 +7,13 @@ import org.bukkit.block.Block;
 public final class Terrain {
     private Terrain() {}
 
-    private static final int MAX_STEP_UP = 1;
-    private static final int MAX_DROP = 4;
+    private static int maxStepUp() {
+        return ru.qweyns.woolynpcs.WoolyNpcs.getInstance().getConfigManager().getTerrainStepUp();
+    }
+
+    private static int maxDrop() {
+        return ru.qweyns.woolynpcs.WoolyNpcs.getInstance().getConfigManager().getTerrainMaxDrop();
+    }
 
     public static Location snap(Location target) {
         World world = target.getWorld();
@@ -17,7 +22,7 @@ public final class Terrain {
         Location result = target.clone();
 
         int climbed = 0;
-        while (climbed <= MAX_STEP_UP && isBlocked(world, result)) {
+        while (climbed <= maxStepUp() && isBlocked(world, result)) {
             result.add(0, 1, 0);
             climbed++;
         }
@@ -26,7 +31,7 @@ public final class Terrain {
         if (isPassable(world, result.clone().subtract(0, 1, 0))) {
             Location probe = result.clone();
             int dropped = 0;
-            while (dropped < MAX_DROP && isPassable(world, probe.clone().subtract(0, 1, 0))) {
+            while (dropped < maxDrop() && isPassable(world, probe.clone().subtract(0, 1, 0))) {
                 probe.subtract(0, 1, 0);
                 dropped++;
             }

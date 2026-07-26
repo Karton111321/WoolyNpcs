@@ -404,10 +404,14 @@ public class NpcAction {
                 String[] parts = parsed.split("\\|", 2);
                 String titleText = parts[0].trim();
                 String subtitle  = parts.length > 1 ? parts[1].trim() : "";
+                var titleCfg = WoolyNpcs.getInstance().getConfigManager();
                 player.showTitle(Title.title(
                         ColorUtil.format(titleText),
                         ColorUtil.format(subtitle),
-                        Title.Times.times(Duration.ofMillis(500), Duration.ofMillis(3500), Duration.ofSeconds(1))));
+                        Title.Times.times(
+                                Duration.ofMillis(titleCfg.getTitleFadeIn()  * 50L),
+                                Duration.ofMillis(titleCfg.getTitleStay()    * 50L),
+                                Duration.ofMillis(titleCfg.getTitleFadeOut() * 50L))));
             }
 
             case TELEPORT -> {
@@ -500,7 +504,8 @@ public class NpcAction {
             case BOSSBAR -> {
                 String[] args = parsed.split("\\|");
                 String text = args.length >= 1 ? args[0].trim() : "BossBar";
-                int durationSec = Math.max(1, args.length >= 2 ? parseInt(args[1].trim(), 5) : 5);
+                int defaultSeconds = WoolyNpcs.getInstance().getConfigManager().getBossbarDefaultSeconds();
+                int durationSec = Math.max(1, args.length >= 2 ? parseInt(args[1].trim(), defaultSeconds) : defaultSeconds);
                 BossBar.Color barColor = BossBar.Color.PURPLE;
                 if (args.length >= 3) {
                     try { barColor = BossBar.Color.valueOf(args[2].trim().toUpperCase(Locale.ROOT)); }

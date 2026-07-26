@@ -9,10 +9,8 @@ softdepend: [Vault, PlaceholderAPI]
 
 commands:
   woolynpcs:
-    description: Управление NPC WoolyNpcs.
     aliases: [wnpc]
     usage: /woolynpcs help
-
 permissions:
   woolynpcs.admin:
     default: op

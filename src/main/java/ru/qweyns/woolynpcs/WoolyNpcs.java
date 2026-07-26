@@ -96,8 +96,7 @@ public final class WoolyNpcs extends JavaPlugin {
         long delay = Math.max(0L, configManager.getStartupDelay());
         Bukkit.getScheduler().runTaskLater(this, () -> {
             storageManager.loadNpcs();
-            dialogManager.createExampleDialog();
-            dialogManager.loadDialogs();
+            dialogManager.reload();
             menuManager.reload();
             getLogger().info("Loaded " + npcManager.getActiveNpcs().size() + " NPC(s).");
             getLogger().info("Loaded " + dialogManager.getDialogs().size() + " dialog(s).");

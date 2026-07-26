@@ -1,0 +1,81 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║             WoolyNpcs  —  dialogs/example.yml                ║
+# ║   Привязка к NPC: /wnpc dialog <имя NPC> set example         ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# Узел, с которого начинается разговор.
+start: greeting
+
+# CHAT — диалог в чате, GUI — окном инвентаря.
+mode: CHAT
+
+# Настройки окна для mode: GUI.
+gui-size: 27
+gui-title: ""
+
+# Звук и посимвольный вывод по умолчанию для всех узлов.
+# typewriter — тиков на символ, 0 отключает.
+sound: ""
+typewriter: 0
+
+nodes:
+
+  greeting:
+    text: "&#BBDEFB&lТорговец&#374151: &#F5F5F0Привет, {player}! Чем могу помочь?"
+    choices:
+      1:
+        label: "&#A8E6CFПокажи товары"
+        goto: shop
+      2:
+        label: "&#BBDEFBО тебе"
+        goto: about
+      3:
+        label: "&#FF8B94До свидания"
+        goto: close
+
+  shop:
+    text: "&#BBDEFB&lТорговец&#374151: &#F5F5F0У меня есть отличные вещи!"
+    sound: "ENTITY_VILLAGER_TRADE"
+    choices:
+      1:
+        label: "&#A8E6CFКупить набор — 100 монет"
+        goto: bought
+        # Условия варианта: тот же набор, что и у действий, но без скобок.
+        conditions:
+          - "PAPI:%vault_eco_balance%>=100"
+          - "!FLAG:bought_kit"
+        # Действия выполняются до перехода на следующий узел.
+        actions:
+          - "MONEY_TAKE:100"
+          - "PLAYER_COMMAND:kit starter"
+        # false — показывать вариант заблокированным вместо того, чтобы прятать.
+        hide-if-locked: false
+        locked-label: "&#FF8B94Не хватает монет"
+        # Материал и слот кнопки для mode: GUI.
+        material: GOLD_INGOT
+        slot: 11
+      2:
+        label: "&#9CA3AFНазад"
+        goto: back
+
+  bought:
+    text: "&#BBDEFB&lТорговец&#374151: &#F5F5F0Отличный выбор!"
+    actions:
+      - "FLAG_SET:bought_kit"
+    # Переход без участия игрока через 3 секунды.
+    auto-goto: greeting
+    auto-delay: 60
+
+  about:
+    text: "&#BBDEFB&lТорговец&#374151: &#F5F5F0Я странствующий торговец. Путешествую по мирам."
+    choices:
+      1:
+        label: "&#A8E6CFИнтересно! Расскажи ещё"
+        goto: about2
+      2:
+        label: "&#9CA3AFНазад"
+        goto: back
+
+  about2:
+    text: "&#BBDEFB&lТорговец&#374151: &#F5F5F0Когда-нибудь я расскажу тебе свою историю... но не сегодня."
+    typewriter: 1

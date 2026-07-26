@@ -319,8 +319,6 @@ dialog-too-far: "%prefix%&#9CA3AFДиалог закрыт: вы отошли о
 dialog-choice-locked: "  &#374151[&#4B5563{index}&#374151] &#4B5563{label}"
 dialog-choice-locked-hover: "&#FF8B94Условия для этого варианта не выполнены"
 dialog-choice-unavailable: "%prefix%&#FF8B94Этот вариант вам сейчас недоступен."
-dialog-gui-title: "&#BBDEFBДиалог"
-dialog-gui-text-title: "&#F5F5F0Реплика"
 
 # ──────────────────────────────────────────────────────────────
 # ВЫБОР NPC (/wnpc select)

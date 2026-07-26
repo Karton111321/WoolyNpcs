@@ -15,9 +15,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WaypointVisualizer {
-    private static final long REDRAW_INTERVAL = 10L;
-    private static final double STEP = 0.5;
-    private static final long AUTO_STOP_TICKS = 20L * 120;
 
     private final WoolyNpcs plugin;
     private final Map<UUID, Session> sessions = new ConcurrentHashMap<>();
@@ -44,7 +41,7 @@ public class WaypointVisualizer {
             WoolyNpc current = plugin.getNpcManager().getNpcById(npc.getId());
             if (current == null || current.getWaypointPath() == null) { stop(player.getUniqueId()); return; }
 
-            if (System.currentTimeMillis() - started > AUTO_STOP_TICKS * 50L) {
+            if (System.currentTimeMillis() - started > plugin.getConfigManager().getVisualizerAutoStop() * 50L) {
                 stop(player.getUniqueId());
                 player.sendMessage(ColorUtil.format(
                         plugin.getConfigManager().getMessage("waypoint-show-off", "name", npc.getName())));
@@ -52,7 +49,7 @@ public class WaypointVisualizer {
             }
 
             draw(player, current.getWaypointPath());
-        }, 0L, REDRAW_INTERVAL);
+        }, 0L, plugin.getConfigManager().getVisualizerInterval());
 
         sessions.put(player.getUniqueId(), new Session(npc.getId(), task));
         player.sendMessage(ColorUtil.format(
@@ -85,7 +82,7 @@ public class WaypointVisualizer {
         double distance = from.distance(to);
         if (distance <= 0) return;
 
-        int steps = (int) Math.min(distance / STEP, 200);
+        int steps = (int) Math.min(distance / plugin.getConfigManager().getVisualizerStep(), 200);
         for (int i = 0; i <= steps; i++) {
             double ratio = steps == 0 ? 0 : (double) i / steps;
             Location point = from.clone().add(

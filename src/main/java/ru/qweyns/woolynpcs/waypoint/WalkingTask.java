@@ -21,7 +21,6 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WalkingTask implements Runnable {
-    private static final String WALK_ANIMATION = "walk";
 
     private final WoolyNpcs plugin;
     private final Map<UUID, WalkState> states = new HashMap<>();
@@ -120,7 +119,7 @@ public class WalkingTask implements Runnable {
 
                 Waypoint next = path.getWaypoints().get(state.currentIndex);
                 if (next.getAnimation() == null || next.getAnimation().isEmpty()) {
-                    npc.playAnimation(WALK_ANIMATION);
+                    npc.playAnimation(plugin.getConfigManager().getWalkAnimation());
                 }
                 continue;
             }
@@ -179,7 +178,7 @@ public class WalkingTask implements Runnable {
             return true;
         }
 
-        npc.playAnimation(WALK_ANIMATION);
+        npc.playAnimation(plugin.getConfigManager().getWalkAnimation());
         teleportWithPassengers(npc, newLoc);
         npc.rotateSmoothly(yaw, 0);
         return false;

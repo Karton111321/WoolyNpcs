@@ -12,8 +12,6 @@ import java.nio.charset.StandardCharsets;
 public final class WebhookSender {
     private WebhookSender() {}
 
-    private static final int TIMEOUT_MS = 5_000;
-    private static final int MAX_CONTENT = 1900;
 
     public static void send(String url, String message) {
         if (url == null || url.isBlank() || message == null || message.isBlank()) return;
@@ -24,9 +22,14 @@ public final class WebhookSender {
             return;
         }
 
-        String content = message.length() > MAX_CONTENT ? message.substring(0, MAX_CONTENT) : message;
+        String content = trim(message);
 
         Bukkit.getScheduler().runTaskAsynchronously(WoolyNpcs.getInstance(), () -> post(url, content));
+    }
+
+    private static String trim(String message) {
+        int max = WoolyNpcs.getInstance().getConfigManager().getWebhookMaxLength();
+        return message.length() > max ? message.substring(0, max) : message;
     }
 
     private static void post(String url, String content) {
@@ -37,8 +40,9 @@ public final class WebhookSender {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.setRequestProperty("User-Agent", "WoolyNpcs");
-            connection.setConnectTimeout(TIMEOUT_MS);
-            connection.setReadTimeout(TIMEOUT_MS);
+            int timeout = WoolyNpcs.getInstance().getConfigManager().getWebhookTimeout();
+            connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
             connection.setDoOutput(true);
 
             byte[] body = ("{\"content\":\"" + escape(content) + "\"}").getBytes(StandardCharsets.UTF_8);
