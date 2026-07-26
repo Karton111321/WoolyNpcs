@@ -1,0 +1,20 @@
+name: WoolyNpcs
+version: '${project.version}'
+main: ru.qweyns.woolynpcs.WoolyNpcs
+api-version: '1.21'
+author: qweyns
+description: NPC плагин с интеграцией ModelEngine — диалоги, маршруты, расписание, голограммы.
+depend: [ModelEngine]
+softdepend: [Vault, PlaceholderAPI]
+
+commands:
+  woolynpcs:
+    description: Управление NPC WoolyNpcs.
+    aliases: [wnpc]
+    usage: /woolynpcs help
+
+permissions:
+  woolynpcs.admin:
+    default: op
+  woolynpcs.npc.*:
+    default: false

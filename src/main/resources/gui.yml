@@ -1,0 +1,94 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║                 WoolyNpcs  —  gui.yml                       ║
+# ║        Настройка всех меню (инвентарей) плагина             ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+editor:
+  title: "&#BBDEFBРедактор: &#F5F5F0{name}"
+  size: 36 # Должно быть кратно 9 (9, 18, 27, 36, 45, 54)
+  items:
+    lookat:
+      slot: 10
+      material: ENDER_PEARL
+      name: "&#A8E6CFСлежение за игроком"
+      lore:
+        - "&#9CA3AFТекущий статус: {status}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы переключить"
+    hologram:
+      slot: 11
+      material: NAME_TAG
+      name: "&#A8E6CFНастройка Голограммы"
+      lore:
+        - "&#9CA3AFСтрок: &#F5F5F0{lines}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы открыть редактор в чате"
+    actions:
+      slot: 12
+      material: COMMAND_BLOCK
+      name: "&#A8E6CFДействия (Actions)"
+      lore:
+        - "&#9CA3AFДействий: &#F5F5F0{count}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы посмотреть список"
+    movehere:
+      slot: 14
+      material: COMPASS
+      name: "&#A8E6CFПереместить к себе"
+      lore:
+        - "&#9CA3AFПеремещает NPC на вашу"
+        - "&#9CA3AFтекущую позицию."
+    turn:
+      slot: 15
+      material: ARMOR_STAND
+      name: "&#A8E6CFПовернуть NPC"
+      lore:
+        - "&#9CA3AFNPC повернет голову и тело"
+        - "&#9CA3AFровно на вас."
+    remove:
+      slot: 16
+      material: BARRIER
+      name: "&#FF8B94Удалить NPC"
+      lore:
+        - ""
+        - "&#FF8B94▸ ВНИМАНИЕ: Это действие необратимо!"
+    model:
+      slot: 19
+      material: ARMOR_STAND
+      name: "&#A8E6CFМодель"
+      lore:
+        - "&#9CA3AFТекущая: &#F5F5F0{model}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы выбрать из списка"
+    animation:
+      slot: 20
+      material: FEATHER
+      name: "&#A8E6CFАнимация"
+      lore:
+        - "&#9CA3AFТекущая: &#F5F5F0{animation}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы выбрать из списка"
+    waypoints:
+      slot: 21
+      material: LEAD
+      name: "&#A8E6CFМаршрут"
+      lore:
+        - "&#9CA3AFТочек: &#F5F5F0{count}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы посмотреть список"
+    movement:
+      slot: 23
+      material: CLOCK
+      name: "&#A8E6CFРежим перемещения"
+      lore:
+        - "&#9CA3AFТекущий: &#F5F5F0{mode}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы переключить"
+    dialog:
+      slot: 24
+      material: BOOK
+      name: "&#A8E6CFДиалог"
+      lore:
+        - "&#9CA3AFПривязан: &#F5F5F0{dialog}"
+        - ""
+        - "&#BBDEFB▸ Нажмите, чтобы посмотреть список"

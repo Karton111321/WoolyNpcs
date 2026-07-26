@@ -1,0 +1,459 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║             WoolyNpcs  —  messages.yml                      ║
+# ║    Все тексты и сообщения плагина. Настройки → config.yml   ║
+# ╚══════════════════════════════════════════════════════════════╝
+#
+# Цвета: используйте &0-&f (стандартные) или &#RRGGBB (hex).
+# Плейсхолдеры: %prefix% заменяется на префикс (см. ниже),
+#               {ключ}   — конкретное значение (имя NPC и т.д.)
+# После изменений: /wnpc reload
+
+# ──────────────────────────────────────────────────────────────
+# ПРЕФИКС
+# Вставляется вместо %prefix% во всех сообщениях.
+# ──────────────────────────────────────────────────────────────
+prefix: "&#374151[&#BBDEFB&lWoolyNpcs&#374151] &#9CA3AF» &#F5F5F0"
+
+# ──────────────────────────────────────────────────────────────
+# ОШИБКИ
+# ──────────────────────────────────────────────────────────────
+no-permission: "%prefix%&#FF8B94У вас нет прав на эту команду."
+only-players: "%prefix%&#FF8B94Эту команду могут использовать только игроки."
+npc-not-found: "%prefix%&#FF8B94NPC с именем '&#FFCDD2{name}&#FF8B94' не найден."
+npc-exists: "%prefix%&#FF8B94NPC с таким именем уже существует. Выберите другое."
+invalid-number: "%prefix%&#FF8B94Ошибка! Введите корректное число (например: 2.5)."
+index-out-of-range: "%prefix%&#FF8B94Индекс &#FFCDD2{index}&#FF8B94 выходит за пределы списка (0–{max})."
+
+# Имя NPC и имя файла экспорта: только латиница, цифры, дефис и подчёркивание.
+invalid-name: "%prefix%&#FF8B94Недопустимое имя. Разрешены латиница, цифры, &#FFCDD2-&#FF8B94 и &#FFCDD2_&#FF8B94 (до 32 символов)."
+
+# Сообщение при передаче недопустимого значения enum.
+# {values} — список допустимых значений.
+invalid-enum: "%prefix%&#FF8B94Недопустимое значение. Допустимые: &#FFCDD2{values}"
+
+# ──────────────────────────────────────────────────────────────
+# УПРАВЛЕНИЕ NPC
+# ──────────────────────────────────────────────────────────────
+npc-created: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' с моделью '&#F5F5F0{model}&#A8E6CF' успешно создан!"
+npc-removed: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' удален."
+npc-copied: "%prefix%&#A8E6CFNPC '&#F5F5F0{source}&#A8E6CF' скопирован как '&#F5F5F0{name}&#A8E6CF'."
+npc-renamed: "%prefix%&#A8E6CFNPC '&#F5F5F0{old}&#A8E6CF' переименован в '&#F5F5F0{name}&#A8E6CF'."
+npc-moved: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' перемещен на вашу позицию."
+npc-teleported: "%prefix%&#A8E6CFВы телепортированы к NPC '&#F5F5F0{name}&#A8E6CF'."
+npc-model-changed: "%prefix%&#A8E6CFМодель NPC '&#F5F5F0{name}&#A8E6CF' изменена на '&#F5F5F0{model}&#A8E6CF'."
+npc-turned: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' повернут. Новый угол сохранен."
+npc-anim-started: "%prefix%&#A8E6CFАнимация '&#F5F5F0{anim}&#A8E6CF' запущена для NPC '&#F5F5F0{name}&#A8E6CF'."
+
+# Ручной spawn/despawn
+npc-spawned: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' заспаунен."
+npc-despawned: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' деспаунен."
+npc-already-spawned: "%prefix%&#FF8B94NPC '&#FFCDD2{name}&#FF8B94' уже заспаунен."
+npc-already-despawned: "%prefix%&#FF8B94NPC '&#FFCDD2{name}&#FF8B94' уже деспаунен."
+npc-spawn-blocked: "%prefix%&#FF8B94NPC '&#FFCDD2{name}&#FF8B94' не поднят: {reason}"
+spawn-block-manual: "&#9CA3AFон выключен вручную (&#F5F5F0/wnpc spawn&#9CA3AF снимет флаг)."
+spawn-block-world: "&#9CA3AFмир NPC не загружен."
+spawn-block-chunk: "&#9CA3AFчанк с NPC не загружен."
+spawn-block-schedule: "&#9CA3AFсейчас не его время по расписанию."
+spawn-block-visibility: "&#9CA3AFрядом нет игроков (задана дальность видимости)."
+spawn-block-unknown: "&#9CA3AFпричина неизвестна."
+
+# ──────────────────────────────────────────────────────────────
+# СЛЕЖЕНИЕ ЗА ИГРОКОМ (lookat)
+# ──────────────────────────────────────────────────────────────
+npc-lookat-enabled: "%prefix%&#A8E6CFСлежение за игроком для '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{status}"
+npc-lookat-distance: "%prefix%&#A8E6CFДистанция слежения для '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{value} блоков"
+npc-lookat-smooth: "%prefix%&#A8E6CFПлавный поворот тела для '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{value}"
+npc-eyeheight-changed: "%prefix%&#A8E6CFВысота глаз для '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{value} блоков"
+
+# ──────────────────────────────────────────────────────────────
+# ГОЛОГРАММА
+# ──────────────────────────────────────────────────────────────
+hologram-updated: "%prefix%&#A8E6CFГолограмма NPC '&#F5F5F0{name}&#A8E6CF' обновлена."
+
+# ──────────────────────────────────────────────────────────────
+# ДЕЙСТВИЯ (actions)
+# ──────────────────────────────────────────────────────────────
+action-added: "%prefix%&#A8E6CFДействие добавлено к NPC '&#F5F5F0{name}&#A8E6CF'."
+action-removed: "%prefix%&#A8E6CFДействие #{index} удалено из NPC '&#F5F5F0{name}&#A8E6CF'."
+action-cleared: "%prefix%&#A8E6CFВсе действия NPC '&#F5F5F0{name}&#A8E6CF' очищены."
+action-no-money: "%prefix%&#FF8B94Недостаточно средств. Нужно: &#FFCDD2{amount}"
+action-no-exp: "%prefix%&#FF8B94Недостаточно опыта. Нужен уровень: &#FFCDD2{amount}"
+
+# Если у NPC нет ни одного действия при /wnpc action <n> list
+action-list-empty: "%prefix%&#9CA3AFУ NPC '&#F5F5F0{name}&#9CA3AF' нет ни одного действия."
+
+# Заголовок списка действий
+action-list-header: "&#374151 ═══ &#BBDEFB&lДействия&#374151: &#F5F5F0{name} &#374151═══"
+
+# Формат каждой строки в списке действий.
+# {index} — порядковый номер (начиная с 0)
+# {click} — тип клика (RIGHT_CLICK, LEFT_CLICK и т.д.)
+# {type}  — тип действия (MESSAGE, PLAYER_COMMAND, CONSOLE_COMMAND и т.д.)
+# {flags} — активные флаги ([PERM:...] [CD:...] [ONCE])
+# {value} — значение (команда или сообщение)
+action-list-format: "  &#374151[&#BBDEFB{index}&#374151] &#9CA3AF{click} &#374151→ &#F5F5F0{type}&#374151: &#BBDEFB{flags}{value}"
+
+# Если у игрока нет нужного права для выполнения условного действия.
+# Оставьте пустым (""), чтобы ничего не показывать.
+action-no-permission: ""
+
+# ──────────────────────────────────────────────────────────────
+# ВИДИМОСТЬ И БЛИЗОСТЬ
+# ──────────────────────────────────────────────────────────────
+npc-visibility-changed: "%prefix%&#A8E6CFДальность видимости NPC '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{value} &#9CA3AF(0 = только по чанкам)"
+npc-proximity-changed: "%prefix%&#A8E6CFДальность триггера NPC '&#F5F5F0{name}&#A8E6CF': &#BBDEFB{value} блоков"
+
+# ──────────────────────────────────────────────────────────────
+# СПИСОК NPC (/wnpc list)
+# ──────────────────────────────────────────────────────────────
+list-header: "&#374151 ═══ &#BBDEFB&lСписок NPC &#374151═══"
+list-empty: "%prefix%&#9CA3AFNPCов пока нет. Создайте первого: /wnpc create <имя> <модель>"
+
+# {name}    — имя NPC
+# {model}   — ID модели
+# {spawned} — статус спауна (значения ниже: spawned-yes / spawned-no)
+list-format: "  &#374151- &#BBDEFB{name} &#9CA3AF[{model}] {spawned}"
+
+# Иконки статуса спауна в списке
+spawned-yes: "&#A8E6CF✔"
+spawned-no: "&#FF8B94✘"
+
+# ──────────────────────────────────────────────────────────────
+# ИНФОРМАЦИЯ (/wnpc info)
+# ──────────────────────────────────────────────────────────────
+info-header: "&#374151 ═══ &#BBDEFB&l{name} &#374151═══"
+info-model: "  &#9CA3AFМодель&#374151: &#BBDEFB{model}"
+info-location: "  &#9CA3AFПозиция&#374151: &#BBDEFB{world} &#F5F5F0{x}  {y}  {z}"
+info-rotation: "  &#9CA3AFПоворот&#374151: &#BBDEFB{yaw}°  {pitch}°"
+info-anim: "  &#9CA3AFАнимация&#374151: &#BBDEFB{anim}"
+info-lookat: "  &#9CA3AFСлежение&#374151: &#BBDEFB{status} &#9CA3AF(дист: {distance}  глаза: {eyeheight})"
+info-holo: "  &#9CA3AFГолограмма&#374151: &#BBDEFB{count} &#9CA3AFстрок"
+info-actions: "  &#9CA3AFДействий&#374151: &#BBDEFB{count}"
+info-visibility: "  &#9CA3AFВидимость&#374151: &#BBDEFB{range} &#9CA3AF({mode})"
+info-spawned: "  &#9CA3AFСпаун&#374151: &#BBDEFB{status}"
+info-stats: "  &#9CA3AFВзаимодействий&#374151: &#BBDEFB{clicks}"
+
+# Значения для {mode} в info-visibility
+info-vis-chunk: "по чанку"
+info-vis-range: "по дальности"
+
+# Значения для {status} (boolean) — вместо true/false
+bool-true:  "&#A8E6CFвкл"
+bool-false: "&#FF8B94выкл"
+
+# ──────────────────────────────────────────────────────────────
+# СТАТИСТИКА
+# ──────────────────────────────────────────────────────────────
+stats-header: "&#374151 ═══ &#BBDEFB&lСтатистика&#374151: &#F5F5F0{name} &#374151═══"
+stats-total: "  &#9CA3AFВсего кликов&#374151: &#BBDEFB{clicks}"
+stats-reset: "%prefix%&#A8E6CFСтатистика NPC '&#F5F5F0{name}&#A8E6CF' сброшена."
+
+# ──────────────────────────────────────────────────────────────
+# ПРОЧЕЕ
+# ──────────────────────────────────────────────────────────────
+reload-success: "%prefix%&#A8E6CFКонфигурация и сообщения перезагружены."
+command-blocked: "%prefix%&#FF8B94Эта команда заблокирована для действий NPC."
+cooldown-message: "%prefix%&#FF8B94Подождите &#FFCDD2{time} сек&#FF8B94 перед следующим кликом."
+
+# ──────────────────────────────────────────────────────────────
+# СПРАВКА (/wnpc help)
+# {label} заменяется на алиас команды (wnpc или woolynpcs)
+# ──────────────────────────────────────────────────────────────
+help-header: "&#374151 ═══ &#BBDEFB&lWoolyNpcs &#9CA3AF— Справка &#374151═══"
+help-lines:
+  - ''
+  - "&#9CA3AF Управление NPC:"
+  - ''
+  - "  &#BBDEFB/{label} create &#BBDEFB<имя> <модель> &#9CA3AF— Создать NPC на вашей позиции"
+  - "  &#BBDEFB/{label} remove &#BBDEFB<имя> &#9CA3AF— Удалить NPC"
+  - "  &#BBDEFB/{label} copy &#BBDEFB<источник> <имя> &#9CA3AF— Дублировать NPC со всеми настройками"
+  - "  &#BBDEFB/{label} rename &#BBDEFB<имя> <новое_имя> &#9CA3AF— Переименовать NPC"
+  - "  &#BBDEFB/{label} list &#BBDEFB[страница] [мир] &#9CA3AF— Список NPC с телепортом по клику"
+  - "  &#BBDEFB/{label} near &#BBDEFB[радиус] &#9CA3AF— NPC поблизости"
+  - "  &#BBDEFB/{label} search &#BBDEFB<текст> &#9CA3AF— Поиск по имени и модели"
+  - "  &#BBDEFB/{label} undo &#9CA3AF— Вернуть последнего удалённого NPC"
+  - "  &#BBDEFB/{label} info &#BBDEFB<имя> &#9CA3AF— Подробная информация о NPC"
+  - "  &#BBDEFB/{label} edit &#BBDEFB<имя> &#9CA3AF— Открыть GUI-редактор NPC"
+  - "  &#BBDEFB/{label} movehere &#BBDEFB<имя> &#9CA3AF— Переместить NPC на вашу позицию"
+  - "  &#BBDEFB/{label} tpto &#BBDEFB<имя> &#9CA3AF— Телепортироваться к NPC"
+  - "  &#BBDEFB/{label} model &#BBDEFB<имя> <модель> &#9CA3AF— Изменить модель"
+  - "  &#BBDEFB/{label} anim &#BBDEFB<имя> <анимация> &#9CA3AF— Воспроизвести анимацию (none = стоп)"
+  - "  &#BBDEFB/{label} turn &#BBDEFB<имя> &#9CA3AF— Повернуть NPC в вашу сторону"
+  - "  &#BBDEFB/{label} spawn &#BBDEFB<имя> &#9CA3AF— Принудительно заспаунить NPC"
+  - "  &#BBDEFB/{label} despawn &#BBDEFB<имя> &#9CA3AF— Принудительно деспаунить NPC"
+  - "  &#BBDEFB/{label} holo &#BBDEFB<имя> <параметр> &#9CA3AF— Настройка голограммы"
+  - "  &#BBDEFB/{label} lookat &#BBDEFB<имя> <параметр> &#9CA3AF— Настройка слежения за игроком"
+  - "  &#BBDEFB/{label} action &#BBDEFB<имя> <параметр> &#9CA3AF— Настройка действий при клике"
+  - "  &#BBDEFB/{label} visibility &#BBDEFB<имя> <дист> &#9CA3AF— Дальность видимости NPC (0 = авто)"
+  - "  &#BBDEFB/{label} proximity &#BBDEFB<имя> <дист> &#9CA3AF— Радиус триггеров ON_ENTER/ON_LEAVE"
+  - "  &#BBDEFB/{label} stats &#BBDEFB<имя> [reset] &#9CA3AF— Статистика / сброс кликов"
+  - "  &#BBDEFB/{label} dialog &#BBDEFB<имя> <set|remove|list|reload> &#9CA3AF— Система диалогов NPC"
+  - "  &#BBDEFB/{label} waypoint &#BBDEFB<имя> <add|remove|clear|list|speed|loop|gravity|show> &#9CA3AF— Маршрут патрулирования"
+  - "  &#BBDEFB/{label} schedule &#BBDEFB<имя> <set|remove|info> &#9CA3AF— Расписание по времени мира"
+  - "  &#BBDEFB/{label} clickreward &#BBDEFB<имя> <set|remove|info> &#9CA3AF— Награда за каждые N кликов"
+  - "  &#BBDEFB/{label} playerhide &#BBDEFB<NPC> <игрок> &#9CA3AF— Скрыть NPC для игрока"
+  - "  &#BBDEFB/{label} playershow &#BBDEFB<NPC> <игрок> &#9CA3AF— Показать NPC игроку"
+  - "  &#BBDEFB/{label} export &#BBDEFB<имя> &#9CA3AF— Экспортировать NPC в файл"
+  - "  &#BBDEFB/{label} import &#BBDEFB<имя> <файл> &#9CA3AF— Импортировать NPC из файла"
+  - "  &#BBDEFB/{label} permission &#BBDEFB<имя> <set|remove|info> &#9CA3AF— Право на использование NPC"
+  - "  &#BBDEFB/{label} spawnall &#9CA3AF— Заспаунить всех NPC"
+  - "  &#BBDEFB/{label} despawnall &#9CA3AF— Деспаунить всех NPC"
+  - ''
+  - "&#9CA3AF Удобство:"
+  - ''
+  - "  &#BBDEFB/{label} select &#BBDEFB[имя|clear] &#9CA3AF— Выбрать NPC (без имени — тот, на кого смотрите)"
+  - "  &#BBDEFB/{label} menu &#BBDEFB<list|reload|open> [id] &#9CA3AF— Меню из папки menus/"
+  - "  &#BBDEFB/{label} backup &#9CA3AF— Резервная копия npcs.yml в backups/"
+  - "  &#BBDEFB/{label} move &#BBDEFB<имя> <none|follow|wander> [радиус] &#9CA3AF— Режим перемещения"
+  - "  &#BBDEFB/{label} routine &#BBDEFB<имя> <add|list|remove|clear> &#9CA3AF— Распорядок дня по времени мира"
+  - "  &#9CA3AF  После выбора вместо имени NPC в любой команде пишите &#BBDEFB@"
+  - "  &#BBDEFB/{label} reload &#9CA3AF— Перезагрузить конфиг без рестарта"
+
+# ──────────────────────────────────────────────────────────────
+# ИСПОЛЬЗОВАНИЕ КОМАНД (usage)
+# Все строки «использование: ...» вынесены сюда.
+# Показываются при неверном вводе команды.
+# {label} заменяется на алиас (/wnpc или /woolynpcs).
+# ──────────────────────────────────────────────────────────────
+invalid-usage: "%prefix%&#F5F5F0Использование: &#BBDEFB{usage}"
+usage:
+  create: "/{label} create <имя> <модель>"
+  menu: "/{label} menu <list|reload|open> [id]"
+  backup: "/{label} backup"
+  search: "/{label} search <текст> [страница]"
+  move: "/{label} move <имя> <none|follow|wander> [радиус] [скорость]"
+  routine: "/{label} routine <имя> <add|list|remove|clear> [время] [тип] [значение]"
+  remove: "/{label} remove <имя>"
+  copy: "/{label} copy <источник> <новое_имя>"
+  rename: "/{label} rename <имя> <новое_имя>"
+  info: "/{label} info <имя>"
+  edit: "/{label} edit <имя>"
+  movehere: "/{label} movehere <имя>"
+  tpto: "/{label} tpto <имя>"
+  model: "/{label} model <имя> <модель>"
+  turn: "/{label} turn <имя>"
+  anim: "/{label} anim <имя> <анимация|none>"
+  visibility: "/{label} visibility <имя> <дистанция|0>"
+  proximity: "/{label} proximity <имя> <дистанция>"
+  spawn: "/{label} spawn <имя>"
+  despawn: "/{label} despawn <имя>"
+  stats: "/{label} stats <имя> [reset]"
+
+  lookat: "/{label} lookat <имя> <enable|distance|smooth|eyeheight>"
+  lookat-enable: "/{label} lookat <имя> enable <true|false>"
+  lookat-distance: "/{label} lookat <имя> distance <число>"
+  lookat-smooth: "/{label} lookat <имя> smooth <true|false>"
+  lookat-eyeheight: "/{label} lookat <имя> eyeheight <число>"
+
+  holo: "/{label} holo <имя> <line | offset | scale | shadow | background | bg-alpha | billboard | align | see-through | line-width | view-range>"
+  holo-line: "/{label} holo <имя> line <add | set | remove | clear | list>"
+  holo-line-add: "/{label} holo <имя> line add <текст>"
+  holo-line-set: "/{label} holo <имя> line set <индекс> <текст>"
+  holo-line-remove: "/{label} holo <имя> line remove <индекс>"
+  holo-offset: "/{label} holo <имя> offset <число>"
+  holo-scale: "/{label} holo <имя> scale <число>"
+  holo-shadow: "/{label} holo <имя> shadow <true | false>"
+  holo-background: "/{label} holo <имя> background <true | false>"
+  holo-bg-alpha: "/{label} holo <имя> bg-alpha <0-255>"
+  holo-billboard: "/{label} holo <имя> billboard <CENTER | VERTICAL | HORIZONTAL | FIXED>"
+  holo-align: "/{label} holo <имя> align <LEFT | CENTER | RIGHT>"
+  holo-see-through: "/{label} holo <имя> see-through <true | false>"
+  holo-line-width: "/{label} holo <имя> line-width <пикселей>"
+  holo-view-range: "/{label} holo <имя> view-range <блоков>"
+
+  action: "/{label} action <имя> <add | remove | clear | list>"
+  action-add: "/{label} action <имя> add <ТИП_КЛИКА> <ТИП_ДЕЙСТВИЯ> <значение>"
+  action-remove: "/{label} action <имя> remove <индекс>"
+
+  dialog: "/{label} dialog <имя> <set | remove | list | reload>"
+  waypoint: "/{label} waypoint <имя> <add | remove | clear | list | speed | loop>"
+  schedule: "/{label} schedule <имя> <set | remove | info>"
+  clickreward: "/{label} clickreward <имя> <set | remove | info>"
+  playerhide: "/{label} playerhide <имя_NPC> <игрок>"
+  playershow: "/{label} playershow <имя_NPC> <игрок>"
+  export: "/{label} export <имя>"
+  import: "/{label} import <новое_имя> <файл>"
+  permission: "/{label} permission <имя> <set | remove | info>"
+
+# Подсказки для action add — показываются после ошибочного ввода
+action-add-hint-clicks: "&#9CA3AF  Типы клика: &#BBDEFBRIGHT_CLICK LEFT_CLICK SHIFT_RIGHT_CLICK SHIFT_LEFT_CLICK ANY ON_ENTER ON_LEAVE"
+action-add-hint-types: "&#9CA3AF  Типы действия: &#BBDEFBCONSOLE_COMMAND PLAYER_COMMAND MESSAGE SERVER SOUND TELEPORT TITLE ACTIONBAR PARTICLE EFFECT GIVE_ITEM FIREWORK BOSSBAR"
+action-add-hint-flags: "&#9CA3AF  Флаги: &#BBDEFB[PERM:право] [CD:сек] [DELAY:сек] [MONEY:сумма] [EXP:уровни] [ONCE] [WORLD:мир] [TIME:DAY|NIGHT] [WEATHER:CLEAR|RAIN|THUNDER]"
+
+# ──────────────────────────────────────────────────────────────
+# ПОДСКАЗКИ К ГОЛОГРАММЕ (/wnpc holo ... list)
+# Показываются при /wnpc holo <имя> line list
+# ──────────────────────────────────────────────────────────────
+# {index} — номер строки, {text} — текст строки
+
+# ──────────────────────────────────────────────────────────────
+# ИНТЕРАКТИВНЫЙ РЕДАКТОР В ЧАТЕ
+# ──────────────────────────────────────────────────────────────
+holo-editor-header: "\n&#374151 ═══ &#BBDEFB&lГолограмма: &#F5F5F0{name} &#374151═══"
+holo-editor-empty: "  &#9CA3AFСтрок пока нет."
+holo-editor-format: "  &#374151[&#BBDEFB{index}&#374151] &#F5F5F0{text} "
+holo-editor-btn-edit: "&#A8E6CF[✎ Изменить] "
+holo-editor-hover-edit: "&#A8E6CFНажмите, чтобы изменить строку"
+holo-editor-btn-remove: "&#FF8B94[✖ Удалить]"
+holo-editor-hover-remove: "&#FF8B94Нажмите, чтобы удалить строку"
+holo-editor-btn-add: "\n  &#BBDEFB[+ Добавить строку]"
+holo-editor-hover-add: "&#BBDEFBНажмите, чтобы добавить новую строку"
+gui-section-not-found: "%prefix%&#FF8B94Ошибка: секция 'editor' не найдена в gui.yml!"
+
+# ──────────────────────────────────────────────────────────────
+# ДИАЛОГИ
+# ──────────────────────────────────────────────────────────────
+dialog-not-found: "%prefix%&#FF8B94Диалог '&#FFCDD2{id}&#FF8B94' не найден. Проверьте папку dialogs/."
+dialog-set: "%prefix%&#A8E6CFДиалог '&#BBDEFB{id}&#A8E6CF' установлен для NPC &#F5F5F0{name}&#A8E6CF."
+dialog-removed: "%prefix%&#A8E6CFДиалог убран у NPC &#F5F5F0{name}&#A8E6CF."
+dialog-list-empty: "%prefix%&#9CA3AFДиалогов не найдено. Создайте .yml файл в папке dialogs/."
+dialog-list-header: "&#374151 ═══ &#BBDEFB&lДоступные диалоги &#374151═══"
+dialog-list-item: "  &#BBDEFB{id} &#9CA3AF— &#F5F5F0{nodes} узлов"
+dialog-reloaded: "%prefix%&#A8E6CFДиалоги перезагружены."
+dialog-npc-text: " &#F5F5F0{text}"
+dialog-choice-format: "  &#374151[&#BBDEFB{index}&#374151] {label}"
+dialog-choice-hover: "&#BBDEFBНажмите для выбора"
+dialog-no-permission: "%prefix%&#FF8B94У вас нет прав для этого варианта ответа."
+dialog-expired: "%prefix%&#9CA3AFДиалог закрыт: вы слишком долго не отвечали."
+dialog-too-far: "%prefix%&#9CA3AFДиалог закрыт: вы отошли от собеседника."
+dialog-choice-locked: "  &#374151[&#4B5563{index}&#374151] &#4B5563{label}"
+dialog-choice-locked-hover: "&#FF8B94Условия для этого варианта не выполнены"
+dialog-choice-unavailable: "%prefix%&#FF8B94Этот вариант вам сейчас недоступен."
+dialog-gui-title: "&#BBDEFBДиалог"
+dialog-gui-text-title: "&#F5F5F0Реплика"
+
+# ──────────────────────────────────────────────────────────────
+# ВЫБОР NPC (/wnpc select)
+# Выбранного NPC можно подставлять во все команды символом @
+# ──────────────────────────────────────────────────────────────
+select-done: "%prefix%&#A8E6CFВыбран NPC &#F5F5F0{name}&#A8E6CF. Теперь вместо имени можно писать &#BBDEFB@&#A8E6CF."
+select-cleared: "%prefix%&#9CA3AFВыбор NPC сброшен."
+select-nothing: "%prefix%&#FF8B94Рядом нет NPC, на которого вы смотрите."
+no-selection: "%prefix%&#FF8B94Сначала выберите NPC: посмотрите на него и выполните &#FFCDD2/wnpc select&#FF8B94."
+
+# ──────────────────────────────────────────────────────────────
+# МЕНЮ (папка menus/, действие OPEN_GUI)
+# ──────────────────────────────────────────────────────────────
+menu-not-found: "%prefix%&#FF8B94Меню '&#FFCDD2{id}&#FF8B94' не найдено. Проверьте папку menus/."
+menu-list-empty: "%prefix%&#9CA3AFМеню не найдено. Создайте .yml файл в папке menus/."
+menu-list-header: "&#374151 ═══ &#BBDEFB&lДоступные меню &#374151═══"
+menu-list-item: "  &#BBDEFB{id} &#9CA3AF— &#F5F5F0{items} кнопок"
+menu-reloaded: "%prefix%&#A8E6CFМеню перезагружены."
+menu-opened: "%prefix%&#A8E6CFОткрыто меню &#F5F5F0{id}&#A8E6CF."
+
+# ──────────────────────────────────────────────────────────────
+# РЕЗЕРВНЫЕ КОПИИ
+# ──────────────────────────────────────────────────────────────
+backup-done: "%prefix%&#A8E6CFРезервная копия создана в папке &#F5F5F0backups/&#A8E6CF."
+backup-disabled: "%prefix%&#FF8B94Копии отключены: storage.backup-count = 0."
+
+# ──────────────────────────────────────────────────────────────
+# РЕЖИМЫ ДВИЖЕНИЯ И РАСПОРЯДОК ДНЯ
+# ──────────────────────────────────────────────────────────────
+move-set: "%prefix%&#A8E6CFNPC &#F5F5F0{name}&#A8E6CF: режим &#BBDEFB{mode}&#A8E6CF, радиус &#F5F5F0{range}&#A8E6CF, скорость &#F5F5F0{speed}&#A8E6CF."
+move-none: "%prefix%&#A8E6CFNPC &#F5F5F0{name}&#A8E6CF больше не перемещается сам."
+routine-added: "%prefix%&#A8E6CFВ распорядок &#F5F5F0{name}&#A8E6CF добавлено: &#BBDEFB{type}&#A8E6CF в &#F5F5F0{time}&#A8E6CF."
+routine-removed: "%prefix%&#A8E6CFЗапись &#F5F5F0{index}&#A8E6CF убрана из распорядка &#F5F5F0{name}&#A8E6CF."
+routine-cleared: "%prefix%&#A8E6CFРаспорядок NPC &#F5F5F0{name}&#A8E6CF очищен."
+routine-empty: "%prefix%&#9CA3AFУ NPC &#F5F5F0{name}&#9CA3AF нет распорядка."
+routine-list-header: "&#374151 ═══ &#BBDEFB&lРаспорядок&#374151: &#F5F5F0{name} &#374151═══"
+routine-list-item: "  &#374151[&#BBDEFB{index}&#374151] &#F5F5F0{time} &#9CA3AF— &#BBDEFB{type} &#9CA3AF{value}"
+routine-invalid-type: "%prefix%&#FF8B94Неизвестный тип. Доступно: &#FFCDD2{types}"
+waypoint-gravity-set: "%prefix%&#A8E6CFПривязка к земле у &#F5F5F0{name}&#A8E6CF: {value}"
+waypoint-show-on: "%prefix%&#A8E6CFМаршрут &#F5F5F0{name}&#A8E6CF показан частицами. Повторите команду, чтобы скрыть."
+waypoint-show-off: "%prefix%&#9CA3AFПоказ маршрута &#F5F5F0{name}&#9CA3AF выключен."
+
+# ──────────────────────────────────────────────────────────────
+# СПИСКИ, ПОИСК И КОРЗИНА
+# ──────────────────────────────────────────────────────────────
+list-header-paged: "&#374151 ═══ &#BBDEFB&lNPC &#374151— страница &#F5F5F0{page}&#374151/&#F5F5F0{pages} &#9CA3AF(всего {total}) &#374151═══"
+list-format-full: "  &#BBDEFB{name} &#9CA3AF— &#F5F5F0{model} &#374151| &#9CA3AF{world} {x} {y} {z} &#374151| {spawned}"
+list-hover-tp: "&#BBDEFBНажмите, чтобы телепортироваться к {name}"
+list-prev: "&#BBDEFB ◀ Назад  "
+list-next: "&#BBDEFB Вперёд ▶"
+near-empty: "%prefix%&#9CA3AFВ радиусе &#F5F5F0{radius}&#9CA3AF блоков NPC нет."
+search-empty: "%prefix%&#9CA3AFПо запросу '&#F5F5F0{query}&#9CA3AF' ничего не найдено."
+npc-removed-undo: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' удалён. Вернуть — &#BBDEFB/wnpc undo&#A8E6CF (в течение {minutes} мин)."
+undo-done: "%prefix%&#A8E6CFNPC '&#F5F5F0{name}&#A8E6CF' восстановлен."
+undo-empty: "%prefix%&#9CA3AFКорзина пуста — восстанавливать нечего."
+undo-disabled: "%prefix%&#FF8B94Корзина отключена: settings.undo-minutes = 0."
+npc-no-edit-permission: "%prefix%&#FF8B94У вас нет прав на редактирование NPC '&#FFCDD2{name}&#FF8B94'."
+
+# ──────────────────────────────────────────────────────────────
+# ИНТЕРФЕЙСЫ РЕДАКТОРА
+# ──────────────────────────────────────────────────────────────
+gui-prev: "&#BBDEFB◀ Предыдущая страница"
+gui-next: "&#BBDEFBСледующая страница ▶"
+gui-close: "&#FF8B94Закрыть"
+gui-back: "&#9CA3AF◀ Назад к редактору"
+gui-model-title: "&#BBDEFBВыбор модели"
+gui-animation-title: "&#BBDEFBВыбор анимации"
+gui-actions-title: "&#BBDEFBДействия NPC"
+gui-no-models: "%prefix%&#FF8B94Не удалось получить список моделей от ModelEngine."
+gui-no-animations: "%prefix%&#FF8B94У этой модели нет анимаций или ModelEngine их не отдал."
+gui-confirm-remove: "&#FF8B94Удалить NPC {name}?"
+gui-confirm-action: "&#FF8B94Удалить это действие?"
+gui-confirm-yes: "&#A8E6CFДа, удалить"
+gui-confirm-no: "&#9CA3AFОтмена"
+gui-confirm-warning: "&#FF8B94Это действие необратимо"
+
+# ──────────────────────────────────────────────────────────────
+# МАРШРУТЫ (WAYPOINTS)
+# ──────────────────────────────────────────────────────────────
+waypoint-added: "%prefix%&#A8E6CFТочка маршрута &#BBDEFB#{index}&#A8E6CF добавлена для NPC &#F5F5F0{name}&#A8E6CF."
+waypoint-removed: "%prefix%&#A8E6CFТочка &#BBDEFB#{index}&#A8E6CF удалена из маршрута NPC &#F5F5F0{name}&#A8E6CF."
+waypoint-cleared: "%prefix%&#A8E6CFМаршрут NPC &#F5F5F0{name}&#A8E6CF очищен."
+waypoint-empty: "%prefix%&#9CA3AFУ NPC &#F5F5F0{name}&#9CA3AF нет точек маршрута."
+waypoint-list-header: "&#374151 ═══ &#BBDEFB&lМаршрут: &#F5F5F0{name} &#374151═══"
+waypoint-list-item: "  &#374151[&#BBDEFB{index}&#374151] &#F5F5F0X:{x} Y:{y} Z:{z} &#9CA3AF(ожидание: {wait} тиков)"
+waypoint-speed-set: "%prefix%&#A8E6CFСкорость маршрута NPC &#F5F5F0{name}&#A8E6CF: &#BBDEFB{speed}"
+waypoint-loop-set: "%prefix%&#A8E6CFЦикл маршрута NPC &#F5F5F0{name}&#A8E6CF: &#BBDEFB{value}"
+
+# ──────────────────────────────────────────────────────────────
+# РАСПИСАНИЕ
+# ──────────────────────────────────────────────────────────────
+schedule-set: "%prefix%&#A8E6CFРасписание NPC &#F5F5F0{name}&#A8E6CF: появление в &#BBDEFB{spawn}&#A8E6CF, исчезновение в &#BBDEFB{despawn}&#A8E6CF (тики мира)"
+schedule-removed: "%prefix%&#A8E6CFРасписание убрано у NPC &#F5F5F0{name}&#A8E6CF."
+schedule-none: "%prefix%&#9CA3AFУ NPC &#F5F5F0{name}&#9CA3AF нет расписания."
+schedule-info: "%prefix%&#9CA3AFРасписание NPC &#F5F5F0{name}&#9CA3AF: появление &#BBDEFB{spawn}&#9CA3AF, исчезновение &#BBDEFB{despawn}"
+schedule-invalid-time: "%prefix%&#FF8B94Время должно быть в диапазоне &#FFCDD20–23999&#FF8B94 тиков мира."
+
+# ──────────────────────────────────────────────────────────────
+# НАГРАДА ЗА КЛИКИ
+# ──────────────────────────────────────────────────────────────
+clickreward-set: "%prefix%&#A8E6CFНаграда за клики NPC &#F5F5F0{name}&#A8E6CF: каждые &#BBDEFB{threshold}&#A8E6CF кликов → &#BBDEFB{action}"
+clickreward-removed: "%prefix%&#A8E6CFНаграда за клики убрана у NPC &#F5F5F0{name}&#A8E6CF."
+clickreward-none: "%prefix%&#9CA3AFУ NPC &#F5F5F0{name}&#9CA3AF не настроена награда за клики."
+clickreward-info: "%prefix%&#9CA3AFНаграда NPC &#F5F5F0{name}&#9CA3AF: каждые &#BBDEFB{threshold}&#9CA3AF кликов → &#BBDEFB{action}"
+clickreward-invalid-threshold: "%prefix%&#FF8B94Порог кликов должен быть больше нуля."
+
+# ──────────────────────────────────────────────────────────────
+# ВИДИМОСТЬ ДЛЯ ИГРОКА
+# ──────────────────────────────────────────────────────────────
+player-not-found: "%prefix%&#FF8B94Игрок '&#FFCDD2{name}&#FF8B94' не найден (не онлайн)."
+playerhide-done: "%prefix%&#A8E6CFNPC &#F5F5F0{npc}&#A8E6CF скрыт для игрока &#BBDEFB{player}&#A8E6CF."
+playershow-done: "%prefix%&#A8E6CFNPC &#F5F5F0{npc}&#A8E6CF показан игроку &#BBDEFB{player}&#A8E6CF."
+npc-no-permission: "%prefix%&#FF8B94У вас нет доступа к этому NPC."
+
+# ──────────────────────────────────────────────────────────────
+# ЭКСПОРТ / ИМПОРТ
+# ──────────────────────────────────────────────────────────────
+export-success: "%prefix%&#A8E6CFNPC &#F5F5F0{name}&#A8E6CF экспортирован в файл &#BBDEFB{file}&#A8E6CF."
+export-failed: "%prefix%&#FF8B94Ошибка экспорта: &#FFCDD2{error}"
+import-success: "%prefix%&#A8E6CFNPC &#F5F5F0{name}&#A8E6CF импортирован из файла &#BBDEFB{file}&#A8E6CF."
+import-file-not-found: "%prefix%&#FF8B94Файл '&#FFCDD2{file}.yml&#FF8B94' не найден в папке exports/."
+import-no-model: "%prefix%&#FF8B94В файле экспорта нет model-id."
+
+# ──────────────────────────────────────────────────────────────
+# ПРАВА NPC
+# ──────────────────────────────────────────────────────────────
+permission-set: "%prefix%&#A8E6CFПраво &#BBDEFB{permission}&#A8E6CF установлено для NPC &#F5F5F0{name}&#A8E6CF."
+permission-removed: "%prefix%&#A8E6CFПраво убрано у NPC &#F5F5F0{name}&#A8E6CF."
+permission-none: "%prefix%&#9CA3AFУ NPC &#F5F5F0{name}&#9CA3AF не установлено ограничение по правам."
+permission-info: "%prefix%&#9CA3AFПраво NPC &#F5F5F0{name}&#9CA3AF: &#BBDEFB{permission}"
+
+# ──────────────────────────────────────────────────────────────
+# МАССОВЫЕ ОПЕРАЦИИ
+# ──────────────────────────────────────────────────────────────
+spawnall-done: "%prefix%&#A8E6CFЗаспаунено &#BBDEFB{count}&#A8E6CF NPC."
+despawnall-done: "%prefix%&#A8E6CFДеспаунено &#BBDEFB{count}&#A8E6CF NPC."
